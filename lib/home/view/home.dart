@@ -94,18 +94,36 @@ class _ChattingScreenState extends State<ChattingScreen> {
                       itemBuilder: (context, index) {
                         final message = messages[index];
                         bool isSenderYou = message['sender'] == userId;
-          
+
                         return ListTile(
                           title: Text(
                             message['sender']!,
-                            textAlign: isSenderYou ? TextAlign.end : TextAlign.start,  // 'You'일 때 텍스트를 오른쪽 정렬
-                          ),
-                          subtitle: Text(
-                            message['message']!,
+                            textAlign: isSenderYou ? TextAlign.end : TextAlign.start,
                             style: TextStyle(
-                              color: isSenderYou ? Colors.blue : Colors.black,
+                              fontSize: sizeFn(context).width * 0.03,
                             ),
-                            textAlign: isSenderYou ? TextAlign.end : TextAlign.start, // 'You'일 때 텍스트를 오른쪽 정렬
+                          ),
+                          subtitle: Align(
+                            alignment: isSenderYou ? Alignment.centerRight : Alignment.centerLeft,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15), // 내용에 대한 패딩
+                              margin: const EdgeInsets.symmetric(vertical: 5), // 위아래 여백
+                              decoration: BoxDecoration(
+                                color: isSenderYou ? Colors.purple[100] : Colors.blue[300],
+                                borderRadius: BorderRadius.only(
+                                  topLeft: const Radius.circular(15),
+                                  topRight: const Radius.circular(15),
+                                  bottomLeft: isSenderYou ? const Radius.circular(15) : const Radius.circular(0),
+                                  bottomRight: isSenderYou ? const Radius.circular(0) : const Radius.circular(15),
+                                ), // 물풍선 모양 테두리
+                              ),
+                              child: Text(
+                                message['message']!,
+                                style: const TextStyle(
+                                  color: Colors.white, // 텍스트 색상
+                                ),
+                              ),
+                            ),
                           ),
                         );
                       },
@@ -128,6 +146,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
                           myControllerText: message,
                           width: sizeFn(context).width * 0.77,
                           clearText: true,
+                          textSpacing: true,
                         ),
                       ),
                       SizedBox(width: sizeFn(context).width * 0.01),
