@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chatting_app/common/component/custom_appbar.dart';
+import 'package:flutter_chatting_app/common/component/custom_text_field.dart';
+import 'package:flutter_chatting_app/common/function/sizeFn.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
+class ChattingScreen extends StatefulWidget {
+  const ChattingScreen({super.key});
 
   @override
-  State<ChatScreen> createState() => _ChatScreenState();
+  State<ChattingScreen> createState() => _ChattingScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _ChattingScreenState extends State<ChattingScreen> {
   late IO.Socket socket;
-  final TextEditingController _messageController = TextEditingController();
+  String message = "";
   List<Map<String, String>> messages = []; // 채팅 메시지 리스트
 
   @override
@@ -43,76 +46,97 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void sendMessage() {
-    if (_messageController.text.trim().isEmpty) return;
+    if (message.isEmpty) return;
 
     // 메시지 서버로 전송
     socket.emit('send_message', {
-      'sender': 'User1', // 보내는 사람 이름 (예: 로그인한 사용자)
-      'message': _messageController.text,
+      'sender': 'You', // 보내는 사람 이름 (예: 로그인한 사용자)
+      'message': message,
     });
 
-    setState(() {
-      messages.add({'sender': 'You', 'message': _messageController.text});
-    });
+    // setState(() {
+    //   messages.add({'sender': 'You', 'message': message});
+    //   message = "";
+    // });
 
-    _messageController.clear();
-  }
-
-  @override
-  void dispose() {
-    socket.dispose(); // 소켓 연결 해제
-    super.dispose();
+    print(message);
+    print(messages);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Chat with Socket.IO'),
-        centerTitle: true,
+      appBar: const CustomAppBar(
+        title: "chatting",
+        showLeading: false,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: messages.length,
-              itemBuilder: (context, index) {
-                final message = messages[index];
-                return ListTile(
-                  title: Text(
-                    message['message']!,
-                    style: TextStyle(
-                      color: message['sender'] == 'You' ? Colors.blue : Colors.black,
-                    ),
-                  ),
-                  subtitle: Text(message['sender']!),
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _messageController,
-                    decoration: const InputDecoration(
-                      labelText: 'Enter your message...',
-                      border: OutlineInputBorder(),
-                    ),
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus(); // 빈 공간 클릭 시 포커스 해제
+        },
+        child: Container(
+          width: double.infinity,
+          height: deviceHeight(context) * 1.0,
+          color: Colors.white,
+          child: Column(
+            children: [
+              Expanded(
+                child: SizedBox(
+                  width: double.infinity,
+                  height: deviceHeight(context) * 0.8,
+                  child: ListView.builder(
+                    itemCount: messages.length,
+                    itemBuilder: (context, index) {
+                      final message = messages[index];
+                      bool isSenderYou = message['sender'] == 'You';
+
+                      return ListTile(
+                        title: Text(
+                          message['sender']!,
+                          textAlign: isSenderYou ? TextAlign.end : TextAlign.start,  // 'You'일 때 텍스트를 오른쪽 정렬
+                        ),
+                        subtitle: Text(
+                          message['message']!,
+                          style: TextStyle(
+                            color: isSenderYou ? Colors.blue : Colors.black,
+                          ),
+                          textAlign: isSenderYou ? TextAlign.end : TextAlign.start, // 'You'일 때 텍스트를 오른쪽 정렬
+                        ),
+                      );
+                    },
                   ),
                 ),
-                const SizedBox(width: 8),
-                IconButton(
-                  icon: const Icon(Icons.send),
-                  onPressed: sendMessage,
-                  color: Colors.blue,
+              ),
+              SizedBox(
+                width: sizeFn(context).width * 0.9,
+                height: deviceHeight(context) * 0.2,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: CustomTextFieldWidget(
+                        hintText: "입력하세요",
+                        onChanged: (value) {
+                          setState(() {
+                            message = value;
+                          });
+                        },
+                        myControllerText: message,
+                        width: sizeFn(context).width * 0.77,
+                        clearText: true,
+                      ),
+                    ),
+                    SizedBox(width: sizeFn(context).width * 0.01),
+                    IconButton(
+                      icon: const Icon(Icons.send),
+                      onPressed: sendMessage,
+                      color: Colors.blue,
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chatting_app/home/view/home2.dart';
+import 'package:flutter_chatting_app/login/view/login.dart';
 import 'home/view/home.dart';
 
 void main() {
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'chatting app',
-      home: TestScreen(),
+      home: LoginScreen(),
     );
   }
 }
