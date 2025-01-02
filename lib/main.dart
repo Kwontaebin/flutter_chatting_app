@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chatting_app/login/view/login.dart';
-import 'home/view/home.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => DataProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
