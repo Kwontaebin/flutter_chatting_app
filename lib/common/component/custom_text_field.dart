@@ -18,11 +18,12 @@ class CustomTextFieldWidget extends StatefulWidget {
   final double? width;
   final double? height;
   final ValueChanged<String> onChanged;
-  final bool onlyNum;
-  final bool obscureText;
-  final String myControllerText;
-  final bool autoFocus;
-  final bool textSpacing;
+  final bool onlyNum; // 오직 숫자만
+  final bool obscureText; // 글자 암호화(비밀번호)
+  final String myControllerText; // controller
+  final bool autoFocus; // 자동 포커스
+  final bool textSpacing; // 띄어쓰기
+  final bool clearText; // 버튼 또는 이벤트 발생시 textField 글자 지우기
 
   const CustomTextFieldWidget({
     super.key,
@@ -36,6 +37,7 @@ class CustomTextFieldWidget extends StatefulWidget {
     this.myControllerText = "",
     this.autoFocus = false,
     this.textSpacing = false,
+    this.clearText = false,
   });
 
   @override
@@ -50,7 +52,18 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
   void initState() {
     super.initState();
     _obscureText = widget.obscureText; // 초기 상태 설정
-    _myController.text = widget.myControllerText;
+    _myController.text = widget.myControllerText; // 초기 값 설정
+  }
+
+  @override
+  void didUpdateWidget(covariant CustomTextFieldWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // myControllerText 값이 변경되었을 때 TextEditingController 업데이트
+    if(widget.clearText) {
+      if (widget.myControllerText != oldWidget.myControllerText) {
+        _myController.text = widget.myControllerText;
+      }
+    }
   }
 
   @override
