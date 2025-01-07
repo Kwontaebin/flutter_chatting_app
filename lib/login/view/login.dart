@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../common/function/postDio.dart';
 
+
 /*
   새로고침(앱에 다시 접속)을 하면 사용자 이름이 없는 이슈가 있음
   계속 provider 사용할지 shared_preferences로 변경할지 고민
