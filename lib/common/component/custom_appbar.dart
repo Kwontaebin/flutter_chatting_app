@@ -56,8 +56,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 Future<void> logout(BuildContext context) async {
-  final Dio dio = Dio(); // Dio 인스턴스 생성
-
   // 저장된 토큰 가져오기
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? token = prefs.getString('token');

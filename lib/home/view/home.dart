@@ -66,10 +66,8 @@ class _ChattingScreenState extends State<ChattingScreen> {
       message = "";
     });
 
-    final prefs = await SharedPreferences.getInstance();
     print(message);
     print(messages);
-    print(prefs.getString('token'));
   }
 
   @override
@@ -77,11 +75,10 @@ class _ChattingScreenState extends State<ChattingScreen> {
     return Scaffold(
       appBar: const CustomAppBar(
         title: "chatting",
-        // leadingOnPressed: () {},
       ),
       body: GestureDetector(
         onTap: () {
-          FocusScope.of(context).unfocus(); // 빈 공간 클릭 시 포커스 해제
+          FocusScope.of(context).unfocus();
         },
         child: SingleChildScrollView(
           child: Container(
@@ -120,7 +117,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
                                   topRight: const Radius.circular(15),
                                   bottomLeft: isSenderYou ? const Radius.circular(15) : const Radius.circular(0),
                                   bottomRight: isSenderYou ? const Radius.circular(0) : const Radius.circular(15),
-                                ), // 물풍선 모양 테두리
+                                ),
                               ),
                               child: Text(
                                 message['message']!,
@@ -156,7 +153,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
                       ),
                       SizedBox(width: sizeFn(context).width * 0.01),
                       IconButton(
-                        icon: Icon(Icons.send),
+                        icon: const Icon(Icons.send),
                         onPressed: sendMessage,
                         color: Colors.blue,
                       ),

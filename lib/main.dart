@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chatting_app/login/view/login.dart';
+import 'package:flutter_chatting_app/splash/view/splash.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'chatting app',
-      home: LoginScreen(),
+      home: SplashScreen(),
     );
   }
 }
