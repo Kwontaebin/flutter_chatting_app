@@ -3,6 +3,7 @@ import 'package:flutter_chatting_app/common/component/custom_appbar.dart';
 import 'package:flutter_chatting_app/common/component/custom_text_field.dart';
 import 'package:flutter_chatting_app/common/function/sizeFn.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../../login/view/login.dart';
@@ -37,6 +38,8 @@ class _ChattingScreenState extends State<ChattingScreen> {
     // 연결 성공
     socket.onConnect((_) {
       print('Connected to server');
+
+      print(socket.id);
     });
 
     // 메시지 수신
@@ -50,7 +53,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
     socket.onDisconnect((_) => print('Disconnected from server'));
   }
 
-  void sendMessage() {
+  Future<void> sendMessage() async {
     if (message.isEmpty) return;
 
     // 메시지 서버로 전송
@@ -63,8 +66,10 @@ class _ChattingScreenState extends State<ChattingScreen> {
       message = "";
     });
 
+    final prefs = await SharedPreferences.getInstance();
     print(message);
     print(messages);
+    print(prefs.getString('token'));
   }
 
   @override
@@ -72,7 +77,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
     return Scaffold(
       appBar: const CustomAppBar(
         title: "chatting",
-        showLeading: false,
+        // leadingOnPressed: () {},
       ),
       body: GestureDetector(
         onTap: () {
@@ -151,7 +156,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
                       ),
                       SizedBox(width: sizeFn(context).width * 0.01),
                       IconButton(
-                        icon: const Icon(Icons.send),
+                        icon: Icon(Icons.send),
                         onPressed: sendMessage,
                         color: Colors.blue,
                       ),

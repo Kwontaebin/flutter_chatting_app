@@ -6,6 +6,7 @@ import 'package:flutter_chatting_app/common/function/navigator.dart';
 import 'package:flutter_chatting_app/common/function/sizeFn.dart';
 import 'package:flutter_chatting_app/home/view/home.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../common/function/postDio.dart';
 
 class DataProvider with ChangeNotifier {
@@ -44,9 +45,12 @@ class _LoginScreenState extends State<LoginScreen> {
         : await postDio(
             postData: requestData,
             url: "login",
-            onSuccess: (Map<String, dynamic> data) {
+            onSuccess: (Map<String, dynamic> data) async {
               if (data['statusCode'] == 200) {
+                print(data);
                 // Provider에 ID 저장
+                final prefs = await SharedPreferences.getInstance();
+                await prefs.setString('token', data["token"]);
                 context.read<DataProvider>().setId(id);
                 navigatorFn(context, const ChattingScreen());
               }
