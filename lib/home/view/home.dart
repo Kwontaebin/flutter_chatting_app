@@ -27,7 +27,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
 
   Future<String?> getName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    userId = prefs.getString('name');
+    userId = prefs.getStringList('userValue')?.last;
   }
 
   void connectToServer() {
