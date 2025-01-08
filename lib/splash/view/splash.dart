@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chatting_app/common/const/data.dart';
 import 'package:flutter_chatting_app/common/function/navigator.dart';
 import 'package:flutter_chatting_app/home/view/home.dart';
 import 'package:flutter_chatting_app/login/view/login.dart';
@@ -12,20 +14,40 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  Dio dio = Dio();
 
   @override
   void initState() {
     super.initState();
-    _getToken();
+    _checkToken();
   }
 
-  Future<String?> _getToken() async {
+  Future<String?> _checkToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
 
-    if(mounted) {
-      if(token != null) {
-        navigatorFn(context, const ChattingScreen());
+    // 토큰이 유효하지 않을 떄 동작이 추가로 필요
+    if (mounted) {
+      if (token != null) {
+        try {
+          Response response = await dio.get(
+              "$IP/protected",
+              options: Options(
+                  headers: {
+                    'Authorization': 'Bearer $token',
+                  }
+              )
+          );
+          if(response.statusCode == 200) navigatorFn(context, const ChattingScreen());
+        } on DioException catch (e) {
+          if(e.response?.statusCode == 403) {
+            print('에러 상태 코드: ${e.response?.statusCode}');
+            print('에러 메시지: ${e.response?.data}');
+
+            await prefs.remove('token');
+            navigatorFn(context, const LoginScreen());
+          }
+        }
       } else {
         navigatorFn(context, const LoginScreen());
       }
@@ -35,9 +57,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: double.infinity,
-        height: double.infinity,
-        color: Colors.white
-     );
+        width: double.infinity, height: double.infinity, color: Colors.white);
   }
 }
