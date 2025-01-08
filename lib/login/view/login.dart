@@ -35,8 +35,8 @@ class _LoginScreenState extends State<LoginScreen> {
             onSuccess: (Map<String, dynamic> data) async {
               if (data['statusCode'] == 200) {
                 final prefs = await SharedPreferences.getInstance();
-                await prefs.setString('token', data["token"]);
-                await prefs.setString('name', id);
+                await prefs.setStringList("userValue", [data["token"], id]);
+                print(prefs.getStringList('userValue')?.first);
                 navigatorFn(context, const ChattingScreen());
               }
             },

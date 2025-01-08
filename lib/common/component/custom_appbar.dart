@@ -58,7 +58,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 Future<void> logout(BuildContext context) async {
   // 저장된 토큰 가져오기
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? token = prefs.getString('token');
+  String? token = prefs.getStringList('userValue')?.first;
 
   try {
     postDio(
@@ -69,10 +69,9 @@ Future<void> logout(BuildContext context) async {
         },
       ),
       onSuccess: (Map<String, dynamic> data) async {
-        print(data["message"]);
         if (data['message'] == "로그아웃 성공") {
-          print("로그아웃 성공");
-          await prefs.remove('token');
+          await prefs.remove('userValue');
+
           navigatorFn(context, const LoginScreen());
         } else {
           print('로그인 상태가 아닙니다.');

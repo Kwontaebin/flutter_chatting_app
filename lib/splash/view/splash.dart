@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<String?> _checkToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
+    String? token = prefs.getStringList('userValue')?.first;
 
     // 토큰이 유효하지 않을 떄 동작이 추가로 필요
     if (mounted) {
@@ -46,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
             print('에러 상태 코드: ${e.response?.statusCode}');
             print('에러 메시지: ${e.response?.data}');
 
-            await prefs.remove('token');
+            await prefs.remove('userValue');
             navigatorFn(context, const LoginScreen());
           }
         }
