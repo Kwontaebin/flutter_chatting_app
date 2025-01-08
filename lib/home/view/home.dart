@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chatting_app/common/component/custom_appbar.dart';
 import 'package:flutter_chatting_app/common/component/custom_text_field.dart';
 import 'package:flutter_chatting_app/common/function/sizeFn.dart';
-import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
-
-import '../../login/view/login.dart';
 
 class ChattingScreen extends StatefulWidget {
   const ChattingScreen({super.key});
@@ -18,13 +16,18 @@ class _ChattingScreenState extends State<ChattingScreen> {
   late IO.Socket socket;
   String message = "";
   List<Map<String, String>> messages = []; // 채팅 메시지 리스트
-  String userId = "";
+  String? userId;
 
   @override
   void initState() {
     super.initState();
     connectToServer();
-    userId = context.read<DataProvider>().userId;
+    getName();
+  }
+
+  Future<String?> getName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userId = prefs.getString('name');
   }
 
   void connectToServer() {

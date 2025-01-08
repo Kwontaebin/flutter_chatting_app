@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   }
               )
           );
-          navigatorFn(context, const ChattingScreen());
+          if(response?.statusCode == 200) navigatorFn(context, const ChattingScreen());
         } on DioException catch (e) {
           print(e.response?.statusCode);
 

@@ -5,12 +5,7 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => DataProvider()),
-      ],
-      child: const MyApp(),
-    ),
+    const MyApp(),
   );
 }
 

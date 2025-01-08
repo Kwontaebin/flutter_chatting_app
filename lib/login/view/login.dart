@@ -5,27 +5,8 @@ import 'package:flutter_chatting_app/common/component/custom_text_field.dart';
 import 'package:flutter_chatting_app/common/function/navigator.dart';
 import 'package:flutter_chatting_app/common/function/sizeFn.dart';
 import 'package:flutter_chatting_app/home/view/home.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../common/function/postDio.dart';
-
-/*
-  새로고침(앱에 다시 접속)을 하면 사용자 이름이 없는 이슈가 있음
-  계속 provider 사용할지 shared_preferences로 변경할지 고민
-  보안에 해로운 사항은 아니라서 shared_preferences로 저장해도 괜찮을지도....
- */
-
-class DataProvider with ChangeNotifier {
-  String _userId = "";
-
-  String get userId => _userId;
-
-  void setId(String userId) {
-    _userId = userId;
-
-    notifyListeners();
-  }
-}
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -53,17 +34,13 @@ class _LoginScreenState extends State<LoginScreen> {
             url: "login",
             onSuccess: (Map<String, dynamic> data) async {
               if (data['statusCode'] == 200) {
-                print(data);
-                // Provider에 ID 저장
                 final prefs = await SharedPreferences.getInstance();
                 await prefs.setString('token', data["token"]);
-                context.read<DataProvider>().setId(id);
+                await prefs.setString('name', id);
                 navigatorFn(context, const ChattingScreen());
               }
             },
           );
-
-    print("로그인 성공: ${context.read<DataProvider>().userId}");
   }
 
   @override
@@ -98,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
             customElevatedButton(
               context,
               text: "login",
-              onPressed: ()  {
+              onPressed: () {
                 login();
               },
             )
