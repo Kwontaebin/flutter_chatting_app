@@ -5,6 +5,10 @@ import 'package:flutter_chatting_app/common/function/sizeFn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
+/*
+  리스너로 토큰이 만료되면 로그인 화면으로 이동하는 코드 필요
+ */
+
 class ChattingScreen extends StatefulWidget {
   const ChattingScreen({super.key});
 
