@@ -71,7 +71,6 @@ Future<void> logout(BuildContext context) async {
       onSuccess: (Map<String, dynamic> data) async {
         print(data["message"]);
         if (data['message'] == "로그아웃 성공") {
-          print(data);
           print("로그아웃 성공");
           await prefs.remove('token');
           navigatorFn(context, const LoginScreen());

@@ -38,9 +38,11 @@ class _SplashScreenState extends State<SplashScreen> {
                   }
               )
           );
-          if(response.statusCode == 200) navigatorFn(context, const ChattingScreen());
+          navigatorFn(context, const ChattingScreen());
         } on DioException catch (e) {
-          if(e.response?.statusCode == 403) {
+          print(e.response?.statusCode);
+
+          if(e.response?.statusCode == 403 || e.response?.statusCode == 400) {
             print('에러 상태 코드: ${e.response?.statusCode}');
             print('에러 메시지: ${e.response?.data}');
 
