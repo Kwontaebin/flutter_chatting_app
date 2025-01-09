@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chatting_app/common/function/navigator.dart';
 import 'package:flutter_chatting_app/common/function/postDio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../login/view/login.dart';
+import '../const/data.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -57,8 +57,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
 Future<void> logout(BuildContext context) async {
   // 저장된 토큰 가져오기
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? token = prefs.getStringList('userValue')?.first;
+  String? token = (await prefs()).getStringList('userValue')?.first;
 
   postDio(
     url: 'logout',
@@ -71,12 +70,12 @@ Future<void> logout(BuildContext context) async {
       if (data['statusCode'] == 200) {
         print("프론트: 로그아웃 성공");
 
-        await prefs.remove('userValue');
+        (await prefs()).remove('userValue');
         navigatorFn(context, const LoginScreen());
       } else if(data['statusCode'] == 400 || data['statusCode'] == 403) {
         print('프론트: 토큰이 유효하지 않습니다.');
 
-        await prefs.remove('userValue');
+        (await prefs()).remove('userValue');
         navigatorFn(context, const LoginScreen());
       }
     },

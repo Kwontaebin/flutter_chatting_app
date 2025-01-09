@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chatting_app/common/component/custom_appbar.dart';
 import 'package:flutter_chatting_app/common/component/custom_elevatedButton.dart';
 import 'package:flutter_chatting_app/common/component/custom_text_field.dart';
+import 'package:flutter_chatting_app/common/const/data.dart';
 import 'package:flutter_chatting_app/common/function/navigator.dart';
 import 'package:flutter_chatting_app/common/function/sizeFn.dart';
 import 'package:flutter_chatting_app/home/view/home.dart';
@@ -35,8 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
             onData: (Map<String, dynamic> data) async {
               print(data);
               if(data["statusCode"] == 200) {
-                final prefs = await SharedPreferences.getInstance();
-                await prefs.setStringList("userValue", [data["token"], id]);
+                await (await prefs()).setStringList("userValue", [data["token"], id]);
                 navigatorFn(context, const ChattingScreen());
               }
             },

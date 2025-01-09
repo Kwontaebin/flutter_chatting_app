@@ -5,6 +5,8 @@ import 'package:flutter_chatting_app/common/function/sizeFn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
+import '../../common/const/data.dart';
+
 /*
   리스너로 토큰이 만료되면 로그인 화면으로 이동하는 코드 필요
  */
@@ -30,8 +32,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
   }
 
   Future<String?> getName() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    userId = prefs.getStringList('userValue')?.last;
+    userId = (await prefs()).getStringList('userValue')?.last;
   }
 
   void connectToServer() {
