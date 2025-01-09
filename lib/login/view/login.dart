@@ -34,9 +34,11 @@ class _LoginScreenState extends State<LoginScreen> {
             url: "login",
             onData: (Map<String, dynamic> data) async {
               print(data);
-              final prefs = await SharedPreferences.getInstance();
-              await prefs.setStringList("userValue", [data["token"], id]);
-              navigatorFn(context, const ChattingScreen());
+              if(data["statusCode"] == 200) {
+                final prefs = await SharedPreferences.getInstance();
+                await prefs.setStringList("userValue", [data["token"], id]);
+                navigatorFn(context, const ChattingScreen());
+              }
             },
           );
   }
@@ -48,36 +50,41 @@ class _LoginScreenState extends State<LoginScreen> {
         title: "login",
         showLeading: false,
       ),
-      body: Container(
-        width: double.infinity,
-        height: deviceHeight(context) * 1.0,
-        color: Colors.white,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CustomTextFieldWidget(
-              hintText: "아이디를 입력하세요",
-              onChanged: (value) {
-                id = value;
-              },
-            ),
-            const SizedBox(height: 16.0),
-            CustomTextFieldWidget(
-              hintText: "비밀번호를 입력하세요",
-              obscureText: true,
-              onChanged: (value) {
-                pw = value;
-              },
-            ),
-            const SizedBox(height: 16.0),
-            customElevatedButton(
-              context,
-              text: "login",
-              onPressed: () {
-                login();
-              },
-            )
-          ],
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus(); // 빈 공간 클릭 시 포커스 해제
+        },
+        child: Container(
+          width: double.infinity,
+          height: deviceHeight(context) * 1.0,
+          color: Colors.white,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomTextFieldWidget(
+                hintText: "아이디를 입력하세요",
+                onChanged: (value) {
+                  id = value;
+                },
+              ),
+              const SizedBox(height: 16.0),
+              CustomTextFieldWidget(
+                hintText: "비밀번호를 입력하세요",
+                obscureText: true,
+                onChanged: (value) {
+                  pw = value;
+                },
+              ),
+              const SizedBox(height: 16.0),
+              customElevatedButton(
+                context,
+                text: "login",
+                onPressed: () {
+                  login();
+                },
+              )
+            ],
+          ),
         ),
       ),
     );
