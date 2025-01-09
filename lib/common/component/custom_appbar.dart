@@ -56,7 +56,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 Future<void> logout(BuildContext context) async {
-  // 저장된 토큰 가져오기
   String? token = (await prefs()).getStringList('userValue')?.first;
 
   postDio(
@@ -67,17 +66,10 @@ Future<void> logout(BuildContext context) async {
       },
     ),
     onData: (Map<String, dynamic> data) async {
-      if (data['statusCode'] == 200) {
-        print("프론트: 로그아웃 성공");
+      print("프론트: ${data["message"]}");
 
-        (await prefs()).remove('userValue');
-        navigatorFn(context, const LoginScreen());
-      } else if(data['statusCode'] == 400 || data['statusCode'] == 403) {
-        print('프론트: 토큰이 유효하지 않습니다.');
-
-        (await prefs()).remove('userValue');
-        navigatorFn(context, const LoginScreen());
-      }
+      (await prefs()).remove('userValue');
+      navigatorFn(context, const LoginScreen());
     },
   );
 }
