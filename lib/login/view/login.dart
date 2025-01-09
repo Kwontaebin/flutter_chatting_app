@@ -32,13 +32,11 @@ class _LoginScreenState extends State<LoginScreen> {
         : await postDio(
             postData: requestData,
             url: "login",
-            onSuccess: (Map<String, dynamic> data) async {
-              if (data['statusCode'] == 200) {
-                final prefs = await SharedPreferences.getInstance();
-                await prefs.setStringList("userValue", [data["token"], id]);
-                print(prefs.getStringList('userValue')?.first);
-                navigatorFn(context, const ChattingScreen());
-              }
+            onData: (Map<String, dynamic> data) async {
+              print(data);
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.setStringList("userValue", [data["token"], id]);
+              navigatorFn(context, const ChattingScreen());
             },
           );
   }

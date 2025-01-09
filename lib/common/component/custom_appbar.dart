@@ -60,25 +60,25 @@ Future<void> logout(BuildContext context) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? token = prefs.getStringList('userValue')?.first;
 
-  try {
-    postDio(
-      url: 'logout',
-      options: Options(
-        headers: {
-          'Authorization': 'Bearer $token',
-        },
-      ),
-      onSuccess: (Map<String, dynamic> data) async {
-        if (data['message'] == "로그아웃 성공") {
-          await prefs.remove('userValue');
-
-          navigatorFn(context, const LoginScreen());
-        } else {
-          print('로그인 상태가 아닙니다.');
-        }
+  postDio(
+    url: 'logout',
+    options: Options(
+      headers: {
+        'Authorization': 'Bearer $token',
       },
-    );
-  } catch (error) {
-    print('로그아웃 요청 오류: $error');
-  }
+    ),
+    onData: (Map<String, dynamic> data) async {
+      if (data['statusCode'] == 200) {
+        print("프론트: 로그아웃 성공");
+
+        await prefs.remove('userValue');
+        navigatorFn(context, const LoginScreen());
+      } else if(data['statusCode'] == 400 || data['statusCode'] == 403) {
+        print('프론트: 토큰이 유효하지 않습니다.');
+
+        await prefs.remove('userValue');
+        navigatorFn(context, const LoginScreen());
+      }
+    },
+  );
 }
