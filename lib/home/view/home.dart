@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chatting_app/common/component/custom_appbar.dart';
 import 'package:flutter_chatting_app/common/component/custom_text_field.dart';
 import 'package:flutter_chatting_app/common/function/sizeFn.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../../common/const/data.dart';

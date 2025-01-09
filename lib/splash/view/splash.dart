@@ -4,7 +4,6 @@ import 'package:flutter_chatting_app/common/const/data.dart';
 import 'package:flutter_chatting_app/common/function/navigator.dart';
 import 'package:flutter_chatting_app/home/view/home.dart';
 import 'package:flutter_chatting_app/login/view/login.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -29,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (mounted) {
       if (token != null) {
         try {
-          Response response = await dio.get(
+          await dio.get(
               "$IP/protected",
               options: Options(
                   headers: {
@@ -37,17 +36,13 @@ class _SplashScreenState extends State<SplashScreen> {
                   }
               )
           );
-          if(response?.statusCode == 200) navigatorFn(context, const ChattingScreen());
+          navigatorFn(context, const ChattingScreen());
         } on DioException catch (e) {
           print(e.response?.statusCode);
+          print("프론트 메시지: ${e.response?.data["message"]}");
 
-          if(e.response?.statusCode == 403 || e.response?.statusCode == 400) {
-            print('에러 상태 코드: ${e.response?.statusCode}');
-            print('에러 메시지: ${e.response?.data}');
-
-            (await prefs()).remove('userValue');
-            navigatorFn(context, const LoginScreen());
-          }
+          (await prefs()).remove('userValue');
+          navigatorFn(context, const LoginScreen());
         }
       } else {
         navigatorFn(context, const LoginScreen());

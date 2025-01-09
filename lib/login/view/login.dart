@@ -6,7 +6,6 @@ import 'package:flutter_chatting_app/common/const/data.dart';
 import 'package:flutter_chatting_app/common/function/navigator.dart';
 import 'package:flutter_chatting_app/common/function/sizeFn.dart';
 import 'package:flutter_chatting_app/home/view/home.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../common/function/postDio.dart';
 
 class LoginScreen extends StatefulWidget {
