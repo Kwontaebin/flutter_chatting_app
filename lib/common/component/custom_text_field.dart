@@ -113,8 +113,7 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
             icon: Icon(
               _obscureText ? Icons.visibility : Icons.visibility_off,
             ),
-          )
-              : null,
+          ) : null,
           contentPadding: contentPadding,
           hintText: widget.hintText,
           hintStyle: textStyle,
