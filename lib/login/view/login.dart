@@ -27,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
         'pw': pw,
       };
     });
+
     (id == '' || pw == '')
         ? print("모두 다 작성해주세요")
         : await postDio(

@@ -3,12 +3,7 @@ import 'package:flutter_chatting_app/common/component/custom_appbar.dart';
 import 'package:flutter_chatting_app/common/component/custom_text_field.dart';
 import 'package:flutter_chatting_app/common/function/sizeFn.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
-
 import '../../common/const/data.dart';
-
-/*
-  리스너로 토큰이 만료되면 로그인 화면으로 이동하는 코드 필요
- */
 
 class ChattingScreen extends StatefulWidget {
   const ChattingScreen({super.key});
@@ -85,16 +80,6 @@ class _ChattingScreenState extends State<ChattingScreen> {
 
     print(message);
     print(messages);
-
-    // if(mounted) {
-    //   WidgetsBinding.instance.addPostFrameCallback((_) {
-    //     _scrollController.animateTo(
-    //       _scrollController.position.maxScrollExtent,
-    //       duration: const Duration(milliseconds: 300),
-    //       curve: Curves.easeOut,
-    //     );
-    //   });
-    // }
   }
 
   @override
