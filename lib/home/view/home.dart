@@ -22,6 +22,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
   String message = "";
   List<Map<String, String>> messages = []; // 채팅 메시지 리스트
   String? userId;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -52,6 +53,16 @@ class _ChattingScreenState extends State<ChattingScreen> {
     socket.on('receive_message', (data) {
       setState(() {
         messages.add({'sender': data['sender'], 'message': data['message']});
+
+        if(mounted) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _scrollController.animateTo(
+              _scrollController.position.maxScrollExtent,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeOut,
+            );
+          });
+        }
       });
     });
 
@@ -74,6 +85,22 @@ class _ChattingScreenState extends State<ChattingScreen> {
 
     print(message);
     print(messages);
+
+    // if(mounted) {
+    //   WidgetsBinding.instance.addPostFrameCallback((_) {
+    //     _scrollController.animateTo(
+    //       _scrollController.position.maxScrollExtent,
+    //       duration: const Duration(milliseconds: 300),
+    //       curve: Curves.easeOut,
+    //     );
+    //   });
+    // }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
   }
 
   @override
@@ -99,6 +126,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
                     height: deviceHeight(context) * 0.8,
                     child: ListView.builder(
                       itemCount: messages.length,
+                      controller: _scrollController,
                       itemBuilder: (context, index) {
                         final message = messages[index];
                         bool isSenderYou = message['sender'] == userId;
