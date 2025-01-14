@@ -28,6 +28,10 @@ class _LoginScreenState extends State<LoginScreen> {
       };
     });
 
+    print(requestData);
+    print(id);
+    print(pw);
+
     (id == '' || pw == '')
         ? print("모두 다 작성해주세요")
         : await postDio(
@@ -80,6 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 context,
                 text: "login",
                 onPressed: () {
+                  print("click");
                   login();
                 },
               )
