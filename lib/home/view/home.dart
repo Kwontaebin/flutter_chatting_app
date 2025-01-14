@@ -32,7 +32,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
 
   void connectToServer() {
     // Socket.IO 서버에 연결
-    socket = IO.io('http://localhost:3000', <String, dynamic>{
+    socket = IO.io(IP, <String, dynamic>{
       'transports': ['websocket'], // WebSocket만 사용
       'autoConnect': true,
     });
