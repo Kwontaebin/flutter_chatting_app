@@ -101,14 +101,18 @@ class _ChattingScreenState extends State<ChattingScreen> {
         child: SingleChildScrollView(
           child: Container(
             width: double.infinity,
-            height: deviceHeight(context) * 1.0,
+            height: MediaQuery.of(context).viewInsets.bottom == 0
+                ? deviceHeight(context) // 키보드가 없을 때 높이
+                : deviceHeight(context) - MediaQuery.of(context).viewInsets.bottom, // 키보드가 올라올 때 높이
             color: Colors.white,
             child: Column(
               children: [
                 Expanded(
                   child: SizedBox(
                     width: double.infinity,
-                    height: deviceHeight(context) * 0.8,
+                    height: MediaQuery.of(context).viewInsets.bottom == 0
+                        ? deviceHeight(context) * 0.8
+                        : deviceHeight(context) * 0.8 - MediaQuery.of(context).viewInsets.bottom, // 키보드가 올라올 때 높이
                     child: ListView.builder(
                       itemCount: messages.length,
                       controller: _scrollController,
@@ -184,6 +188,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
           ),
         ),
       ),
+      resizeToAvoidBottomInset: true, // 키보드가 올라올 때 화면 크기 자동 조정
     );
   }
 }
