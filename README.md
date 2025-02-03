@@ -1,16 +1,59 @@
-# flutter_chatting_app
+# **Flutter 채팅 프로젝트**
 
-A new Flutter project.
+프로젝트 소개
+- 채팅 프로젝트로 로그인한 사용자와 채팅을 하는 앱입니다.
+- 토큰을 활용해서 자동로그인 구현
 
-## Getting Started
+## 목차
+- [개발 환경](#1-개발-환경)
+- [프로젝트 구조](#2-프로젝트-구조)
+- [개발 기간 및 작업 관리](#3-개발-기간-및-작업-관리)
+- [페이지별 기능](#4-페이지별-기능)
+- [구현하면서 경험한 이슈사항 및 신경 쓴 부분](#5-구현하면서-경험한-이슈사항-및-신경-쓴-부분)
+- [후기](#6-후기)
 
-This project is a starting point for a Flutter application.
+## 1. 개발 환경
+- #### App Front-end : Dart, Flutter
+- #### back-end : MySQL, Node-js
+- #### 사용한 라이브러리 : provider(상태관리), dio(api 통신), socket_io_client(flutter socket 통신), jsonwebtoken(서버 토큰), socket.io(node.js socket 통신)
 
-A few resources to get you started if this is your first Flutter project:
+## 2. 프로젝트 구조
+📦lib <br/>
+ ┣ 📂common <br/>
+ ┃ ┣ 📂component <br/>
+ ┃ ┃ ┣ 📜custom_appbar.dart <br/>
+ ┃ ┃ ┣ 📜custom_checkbox.dart <br/>
+ ┃ ┃ ┣ 📜custom_elevatedButton.dart <br/>
+ ┃ ┃ ┣ 📜custom_image.dart <br/>
+ ┃ ┃ ┣ 📜custom_loading.dart <br/>
+ ┃ ┃ ┣ 📜custom_show_hide_text.dart <br/>
+ ┃ ┃ ┣ 📜custom_showdiaLog.dart <br/>
+ ┃ ┃ ┣ 📜custom_text.dart <br/>
+ ┃ ┃ ┣ 📜custom_text_field.dart <br/>
+ ┃ ┃ ┗ 📜custom_toast.dart <br/>
+ ┃ ┣ 📂const <br/>
+ ┃ ┃ ┗ 📜data.dart <br/>
+ ┃ ┗ 📂function <br/>
+ ┃ ┃ ┣ 📜navigator.dart <br/>
+ ┃ ┃ ┣ 📜postDio.dart <br/>
+ ┃ ┃ ┗ 📜sizeFn.dart <br/>
+ ┣ 📂home <br/>
+ ┃ ┗ 📂view <br/>
+ ┃ ┃ ┗ 📜home.dart <br/>
+ ┣ 📂login <br/>
+ ┃ ┗ 📂view <br/>
+ ┃ ┃ ┗ 📜login.dart <br/>
+ ┣ 📂splash <br/>
+ ┃ ┗ 📂view <br/>
+ ┃ ┃ ┗ 📜splash.dart <br/>
+ ┗ 📜main.dart <br/>
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 3. 개발 기간 및 작업 관리
+### 개발 기간
+- 2025.01.05 ~ 2025.01.12
+### 작업 관리
+- github desktop 을 사용해서 관리
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 4. 실제 동작 영상
+
+### 로그인
