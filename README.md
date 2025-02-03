@@ -54,17 +54,18 @@
 ### 작업 관리
 - github desktop 을 사용해서 관리
 
-## 4. 실제 동작 영상
-
+## 4. 페이지별 기능
 ### 로그인
-- 로그인을 성공하지 못했을 때는 실패한 이유를 토스트 바로 띄었습니다.(fluttertoast 라이브러리 사용)
+#### 로그인 성공 
+
+<img src="https://github.com/user-attachments/assets/29e39b1e-1f1f-49ee-9ede-256b3bbf40de" width="300"> <br/>
+#### 중복 로그인
 - 이미 로그인 한 사용자가 있다면 로그인을 하지 못하도록 구현했습니다.(중복 로그인X)
+- 서버에서 토큰으로 로그인한 사용자 정보를 저장하고 이미 로그인한 사용자 정보를 가지고 로그인 시도를 하면 "이미 로그인된 사용자입니다." 토스트 바를 띄우도록 했습니다.(fluttertoast 라이브러리 사용)
+
+<img src="https://github.com/user-attachments/assets/8b68b213-9494-4afd-97af-352fd22ccf4c" width="300"> <br/>
+#### 일치하는 정보가 없을 때
 - DB에 저장되지 않은 정보로 로그인을 시도할 경우 로그인을 하지 못하도록 구현했습니다.
 
-로그인 성공했을 떄 <br/>
-<img src="https://github.com/user-attachments/assets/29e39b1e-1f1f-49ee-9ede-256b3bbf40de" width="300"> <br/>
-중복 로그인일 때 <br/>
-<img src="https://github.com/user-attachments/assets/8b68b213-9494-4afd-97af-352fd22ccf4c" width="300"> <br/>
-일치하는 정보가 없을 때 <br/>
 <img src="https://github.com/user-attachments/assets/395a3e84-6853-43a3-9e35-e12b5417975c" width="300"> <br/>
 
