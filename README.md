@@ -61,4 +61,7 @@
 - 이미 로그인 한 사용자가 있다면 로그인을 하지 못하도록 구현했습니다.(중복 로그인X)
 - DB에 저장되지 않은 정보로 로그인을 시도할 경우 로그인을 하지 못하도록 구현했습니다.
 
-![Image](https://github.com/user-attachments/assets/a505e715-e8f9-4f42-89e9-445e2faf200e)
+<img src="https://github.com/user-attachments/assets/29e39b1e-1f1f-49ee-9ede-256b3bbf40de" width="300">
+<img src="https://github.com/user-attachments/assets/8b68b213-9494-4afd-97af-352fd22ccf4c" width="300">
+<img src="https://github.com/user-attachments/assets/395a3e84-6853-43a3-9e35-e12b5417975c" width="300">
+
