@@ -56,9 +56,12 @@
 
 ## 4. 페이지별 기능
 ### 로그인
+
 #### 로그인 성공 
 - 로그인에 성공하면 채팅화면으로 이동합니다.
-- 서버, 프론트(flutter)에 사용자의 정보를 저장합니다.
+- 서버, 프론트(flutter)에 토큰, 이름을 shared_preferences 라이브러리를 사용해서 저장합니다.
+- 토큰 유효시간은 1시간
+- shared_preferences 라이브러리를 사용한 이유는 provider은 영구적으로 저장되지 않고 앱을 다시 시작하면 저장했던 정보가 삭제되어서 자동로그인을 구현할 때 이슈가 있어서 shared_preferences 라이브러리 사용
 
 <img src="https://github.com/user-attachments/assets/29e39b1e-1f1f-49ee-9ede-256b3bbf40de" width="300"> <br/>
 #### 중복 로그인
@@ -72,3 +75,17 @@
 <img src="https://github.com/user-attachments/assets/395a3e84-6853-43a3-9e35-e12b5417975c" width="300"> <br/>
 
 ### 자동 로그인
+
+#### 토큰이 유효한 경우
+- splash 화면에서 토큰 유효성 검사를 해서 유효하다면 채팅 화면으로 이동
+
+<img src="https://github.com/user-attachments/assets/c6b3ebf0-6f81-436f-90a0-1e6d206ed27d" width="300"> <br/>
+#### 토큰이 유효하지 않거나, 없을 경우
+- splash 화면에서 토큰 유효성 검사를 해서 유효하지 않거나 토큰을 보유하지 않을 경우 로그인 화면으로 이동
+
+<img src="https://github.com/user-attachments/assets/a505e715-e8f9-4f42-89e9-445e2faf200e" width="300"> <br/>
+
+### 채팅
+
+![Image](https://github.com/user-attachments/assets/f8defac7-ff52-4fcf-90f4-675a1f40cbe4)
+![Image](https://github.com/user-attachments/assets/6a1f69fd-a5ef-4459-abdc-05a859f0d458)
