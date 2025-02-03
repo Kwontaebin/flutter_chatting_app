@@ -57,6 +57,8 @@
 ## 4. 페이지별 기능
 ### 로그인
 #### 로그인 성공 
+- 로그인에 성공하면 채팅화면으로 이동합니다.
+- 서버, 프론트(flutter)에 사용자의 정보를 저장합니다.
 
 <img src="https://github.com/user-attachments/assets/29e39b1e-1f1f-49ee-9ede-256b3bbf40de" width="300"> <br/>
 #### 중복 로그인
@@ -69,3 +71,4 @@
 
 <img src="https://github.com/user-attachments/assets/395a3e84-6853-43a3-9e35-e12b5417975c" width="300"> <br/>
 
+### 자동 로그인
